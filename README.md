@@ -1,0 +1,7 @@
+**SISTEM ANALISIS TREN NILAI MAHASISWA PER SEMESTER**
+
+Program Sistem Analisis Tren Nilai Mahasiswa per Semester merupakan aplikasi berbasis C++ yang berjalan melalui Command Line Interface (CLI). Program ini dirancang untuk membantu pengguna dalam mengelola dan menganalisis data IPK mahasiswa dari semester ke semester. Setiap mahasiswa dapat diinputkan datanya berupa nama, NIM, jumlah semester yang telah ditempuh, serta nilai IPK pada masing-masing semester. Data tersebut kemudian dapat ditampilkan kembali secara lengkap bersama perhitungan rata-rata IPK dan analisis tren nilai. Tren akademik ditentukan berdasarkan pola perubahan IPK, yaitu apakah nilai mahasiswa mengalami peningkatan, penurunan, stagnan, atau fluktuatif.
+
+Selain menampilkan seluruh data, program ini juga menyediakan fitur pencarian mahasiswa berdasarkan NIM. Fitur ini menampilkan data lengkap mahasiswa yang ditemukan, termasuk IPK tertinggi dan terendah selama masa studi. Program juga dilengkapi fungsi pengurutan data mahasiswa berdasarkan rata-rata IPK menggunakan algoritma Bubble Sort, sehingga pengguna dapat melihat urutan mahasiswa dari yang memiliki performa tertinggi hingga terendah.
+
+Secara keseluruhan, program ini memanfaatkan berbagai konsep dasar dalam algoritma pemrograman, seperti array 1D dan 2D, percabangan, perulangan, sub-program, searching, dan sorting. Aplikasi ini dibuat untuk latihan pengembangan logika pemrograman serta sebagai studi kasus sederhana dalam analisis perkembangan akademik mahasiswa.
