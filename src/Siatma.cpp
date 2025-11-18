@@ -10,6 +10,8 @@ struct Mahasiswa {
     string NIM;
     int jumlahSemester;
     float ipk[MAX_SEMESTER];
+    float rataRata;
+    string tren;
 };
 
 void inputMahasiswa(Mahasiswa data[], int &jumlahMahasiswa) {
@@ -61,6 +63,61 @@ void inputMahasiswa(Mahasiswa data[], int &jumlahMahasiswa) {
     } while (lanjut == 'y' || lanjut == 'Y');
 }
 
+float hitungRataRata(Mahasiswa data[], int index) {
+    float sum = 0;
+    for (int i = 0; i < data[index].jumlahSemester; i++) {
+        sum += data[index].ipk[i];
+    }
+    return sum / data[index].jumlahSemester;
+}
+
+string hitungTren(Mahasiswa data[], int index) {
+    int naik = 0, turun = 0;
+    
+    for (int i = 0; i < data[index].jumlahSemester - 1; i++) {
+        if (data[index].ipk[i + 1] > data[index].ipk[i]) {
+            naik++;
+        } else if (data[index].ipk[i + 1] < data[index].ipk[i]) {
+            turun++;
+        }
+    }
+
+    if (naik == 0 && turun == 0) {
+        return "Stagnan";
+    } else if (naik > turun) {
+        return "Naik";
+    } else if (naik < turun) {
+        return "Turun";
+    } else {
+        return "Fluktuatif";
+    }
+}
+
+void tampilkanSemuaData(Mahasiswa data[], int jumlahMahasiswa) {
+    if (jumlahMahasiswa == 0) {
+        cout << "Belum ada data mahasiswa.\n";
+        return;
+    }
+    
+    for (int i = 0; i < jumlahMahasiswa; i++) {
+        data[i].rataRata = hitungRataRata(data, i);
+        data[i].tren = hitungTren(data, i);
+
+        cout << "\nNama : " << data[i].nama << endl;
+        cout << "NIM : " << data[i].NIM << endl;
+
+        cout << "IPK : ";
+        for (int j = 0; j < data[i].jumlahSemester; j++) {
+            cout << data[i].ipk[j] << " ";
+        }
+
+        cout << "\nRata - rata : " << data[i].rataRata << endl;
+        cout << "Tren Nilai : " << data[i].tren << endl;
+        
+    }
+    
+}
+
 int main() {
     Mahasiswa data[MAX_MAHASISWA];
     int jumlahMahasiswa = 0;
@@ -88,7 +145,7 @@ int main() {
                 break;
 
             case 2:
-                cout << "Menu 2 belum tersedia.\n";
+                tampilkanSemuaData(data, jumlahMahasiswa);
                 break;
 
             case 3:
