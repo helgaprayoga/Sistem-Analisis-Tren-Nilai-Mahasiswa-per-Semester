@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 using namespace std;
 
@@ -35,14 +36,14 @@ void inputMahasiswa(Mahasiswa data[], int &jumlahMahasiswa) {
         cout << "Masukkan jumlah semester (maks " << MAX_SEMESTER << "): ";
         cin >> data[jumlahMahasiswa].jumlahSemester;
 
-        // Validasi jumlah semester
+        // validasi jumlah semester
         while (data[jumlahMahasiswa].jumlahSemester < 1 ||
                data[jumlahMahasiswa].jumlahSemester > MAX_SEMESTER) {
             cout << "Jumlah semester tidak valid! Masukkan ulang: ";
             cin >> data[jumlahMahasiswa].jumlahSemester;
         }
 
-        // Input IPK dengan validasi max 4.00
+        // input IPK dgn validasi max 4.00
         for(int i = 0; i < data[jumlahMahasiswa].jumlahSemester; i++) {
             do {
                 cout << "IPK Semester " << i+1 << ": ";
@@ -98,32 +99,55 @@ void tampilkanSemuaData(Mahasiswa data[], int jumlahMahasiswa) {
         cout << "Belum ada data mahasiswa.\n";
         return;
     }
-    
+
+    cout << "\n===============================================================================================================================\n";
+    cout << left
+         << setw(5)  << "No"
+         << setw(12) << "NIM"
+         << setw(25) << "Nama"
+         << setw(7)  << "S1"
+         << setw(7)  << "S2"
+         << setw(7)  << "S3"
+         << setw(7)  << "S4"
+         << setw(7)  << "S5"
+         << setw(7)  << "S6"
+         << setw(7)  << "S7"
+         << setw(7)  << "S8"
+         << setw(12) << "Rata-rata"
+         << setw(10) << "Tren"
+         << endl;
+    cout << "===============================================================================================================================\n";
+
     for (int i = 0; i < jumlahMahasiswa; i++) {
         data[i].rataRata = hitungRataRata(data, i);
         data[i].tren = hitungTren(data, i);
 
-        cout << "\nNama : " << data[i].nama << endl;
-        cout << "NIM : " << data[i].NIM << endl;
+        cout << left
+             << setw(5)  << i+1
+             << setw(12) << data[i].NIM
+             << setw(25) << data[i].nama;
 
-        cout << "IPK : ";
-        for (int j = 0; j < data[i].jumlahSemester; j++) {
-            cout << data[i].ipk[j] << " ";
+        for (int j = 0; j < MAX_SEMESTER; j++) {
+            if (j < data[i].jumlahSemester)
+                cout << setw(7) << fixed << setprecision(2) << data[i].ipk[j];
+            else
+                cout << setw(7) << "-";
         }
 
-        cout << "\nRata - rata : " << data[i].rataRata << endl;
-        cout << "Tren Nilai : " << data[i].tren << endl;
-        
+        cout << setw(12) << fixed << setprecision(2) << data[i].rataRata
+             << setw(10) << data[i].tren
+             << endl;
+
+        cout << "--------------------------------------------------------------------------------------------------------------------------------\n";
     }
-    
 }
+
 
 int main() {
     Mahasiswa data[MAX_MAHASISWA];
     int jumlahMahasiswa = 0;
     int pilihanMenu;
 
-    // Opening SIATMA
     cout << "============================================\n";
     cout << "     Selamat Datang di SIATMA               \n";
     cout << " Sistem Informasi Analisis Tren Mahasiswa   \n";
