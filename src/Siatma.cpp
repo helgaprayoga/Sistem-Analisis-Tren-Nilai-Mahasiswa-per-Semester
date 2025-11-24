@@ -179,6 +179,58 @@ void tampilkanSemuaData(Mahasiswa data[], int jumlahMahasiswa) {
     }
 }
 
+void sequentialSearchNIM(Mahasiswa data[], int jumlahMahasiswa) {
+
+    if (jumlahMahasiswa == 0) {
+        cout << "Belum ada data mahasiswa.\n";
+        return;
+    }
+
+    string nimDicari;
+
+    cout << "\n=== Cari Data Mahasiswa ===\n";
+    cout << "Masukkan NIM yang ingin dicari: ";
+    cin >> nimDicari;
+
+    int index = -1;
+
+    // Sequential Search
+    for (int i = 0; i < jumlahMahasiswa; i++) {
+        if (data[i].NIM == nimDicari) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
+        cout << "Data mahasiswa dengan NIM " << nimDicari << " tidak ditemukan.\n";
+        return;
+    }
+
+    data[index].rataRata = hitungRataRata(data, index);
+    data[index].tren = hitungTren(data, index);
+
+    int semMax, semMin;
+    float maxIPK, minIPK;
+    cariSemesterMaxMin(data, index, semMax, semMin, maxIPK, minIPK);
+
+    cout << "\n=== Hasil Pencarian ===\n";
+    cout << "Nama              : " << data[index].nama << endl;
+    cout << "NIM               : " << data[index].NIM << endl;
+    cout << "Jumlah Semester   : " << data[index].jumlahSemester << endl;
+
+    cout << "IPK per Semester  : ";
+    for (int i = 0; i < data[index].jumlahSemester; i++) {
+        cout << fixed << setprecision(2) << data[index].ipk[i] << " ";
+    }
+    cout << endl;
+
+    cout << "Rata-rata IPK     : " << fixed << setprecision(2) << data[index].rataRata << endl;
+    cout << "Tren IPK          : " << data[index].tren << endl;
+    cout << "Semester Tertinggi: S" << semMax << " (" << maxIPK << ")\n";
+    cout << "Semester Terendah : S" << semMin << " (" << minIPK << ")\n";
+}
+
 int main() {
     Mahasiswa data[MAX_MAHASISWA];
     int jumlahMahasiswa = 0;
@@ -219,7 +271,7 @@ do {
             break;
 
         case 3:
-            cout << "Menu 3 belum tersedia.\n";
+            sequentialSearchNIM(data, jumlahMahasiswa);
             break;
 
         case 4:
