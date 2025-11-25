@@ -273,6 +273,16 @@ int main() {
     int pilihanMenu;
     string inputMenu;
 
+    // ====== DATASET AWAL / PRELOADED ======
+    data[0] = {"Helga Arya Prayoga", "24051130022", 3, {3.8, 3.7, 3.9}, 0, ""};
+    data[1] = {"Asya Tiara Syafitrah Susilo", "24051130021", 3, {3.5, 3.7, 3.9}, 0, ""};
+    data[2] = {"Nadia Omara", "23051130017", 5, {3.2, 3.4, 3.5, 3.2, 3.7}, 0, ""};
+    data[3] = {"Arif Syarifuddin", "23051104013", 5, {3.2, 3.5, 3.7, 3.5, 4.0}, 0, ""};
+    data[4] = {"Budi Halmahera", "23051130055", 3, {3.0, 3.4, 3.6}, 0, ""}; // 
+
+    jumlahMahasiswa = 5;
+    // ====== END DATASET ======
+
     cout << "============================================\n";
     cout << "     Selamat Datang di SIATMA               \n";
     cout << " Sistem Informasi Analisis Tren Mahasiswa   \n";
