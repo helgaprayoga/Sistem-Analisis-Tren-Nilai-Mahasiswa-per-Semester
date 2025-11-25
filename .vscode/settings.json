@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.embeddedhtml": "html",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "xstring": "cpp"
     }
 }

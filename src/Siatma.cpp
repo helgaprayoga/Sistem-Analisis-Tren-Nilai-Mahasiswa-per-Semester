@@ -123,7 +123,6 @@ void sortingNIM(Mahasiswa data[], int jumlahMahasiswa) {
     }
 }
 
-
 void tampilkanSemuaData(Mahasiswa data[], int jumlahMahasiswa) {
     if (jumlahMahasiswa == 0) {
         cout << "Belum ada data mahasiswa.\n";
@@ -179,7 +178,63 @@ void tampilkanSemuaData(Mahasiswa data[], int jumlahMahasiswa) {
     }
 }
 
-void sequentialSearchNIM(Mahasiswa data[], int jumlahMahasiswa) {
+void editMahasiswa(Mahasiswa data[], int index) {
+    cout << "\n=== Edit IPK Mahasiswa ===\n";
+
+    cout << "Nama : " << data[index].nama << endl;
+    cout << "NIM  : " << data[index].NIM << endl;
+    cout << "Jumlah Semester : " << data[index].jumlahSemester << endl;
+
+    cout << "\nIPK saat ini:\n";
+    for (int i = 0; i < data[index].jumlahSemester; i++) {
+        cout << "Semester " << i+1 << " : " << fixed << setprecision(2) << data[index].ipk[i] << endl;
+    }
+
+    int pilihan;
+    cout << "\nPilih semester yang ingin diedit (1 - " << data[index].jumlahSemester << ", 0 untuk batal): ";
+    cin >> pilihan;
+
+    if (pilihan == 0) {
+        cout << "Edit dibatalkan.\n";
+        return;
+    }
+
+    while (pilihan < 1 || pilihan > data[index].jumlahSemester) {
+        cout << "Pilihan tidak valid! Masukkan semester yang benar: ";
+        cin >> pilihan;
+    }
+
+    float ipkBaru;
+    do {
+        cout << "Masukkan IPK baru untuk Semester " << pilihan << " (0.00 - 4.00): ";
+        cin >> ipkBaru;
+
+        if (ipkBaru < 0.0 || ipkBaru > 4.0)
+            cout << "IPK tidak valid, ulangi input.\n";
+
+    } while (ipkBaru < 0.0 || ipkBaru > 4.0);
+
+    data[index].ipk[pilihan - 1] = ipkBaru;
+
+    cout << "IPK semester " << pilihan << " berhasil diperbarui!\n";
+
+    // Update ulang nilai rata-rata & tren
+    data[index].rataRata = hitungRataRata(data, index);
+    data[index].tren = hitungTren(data, index);
+
+    cout << "Rata-rata baru: " << fixed << setprecision(2) << data[index].rataRata << endl;
+    cout << "Tren baru     : " << data[index].tren << endl;
+}
+
+void hapusMahasiswa(Mahasiswa data[], int &jumlahMahasiswa, int index) {
+    for (int i = index; i < jumlahMahasiswa - 1; i++) {
+        data[i] = data[i + 1];
+    }
+    jumlahMahasiswa--;
+    cout << "Data mahasiswa berhasil dihapus.\n";
+}
+
+void sequentialSearchNIM(Mahasiswa data[], int &jumlahMahasiswa) {
 
     if (jumlahMahasiswa == 0) {
         cout << "Belum ada data mahasiswa.\n";
@@ -207,6 +262,7 @@ void sequentialSearchNIM(Mahasiswa data[], int jumlahMahasiswa) {
         return;
     }
 
+    // Hitung ulang info
     data[index].rataRata = hitungRataRata(data, index);
     data[index].tren = hitungTren(data, index);
 
@@ -229,6 +285,24 @@ void sequentialSearchNIM(Mahasiswa data[], int jumlahMahasiswa) {
     cout << "Tren IPK          : " << data[index].tren << endl;
     cout << "Semester Tertinggi: S" << semMax << " (" << maxIPK << ")\n";
     cout << "Semester Terendah : S" << semMin << " (" << minIPK << ")\n";
+
+    int pilihan;
+    cout << "\nApa yang ingin Anda lakukan?\n";
+    cout << "1. Edit Data\n";
+    cout << "2. Hapus Data\n";
+    cout << "0. Kembali\n";
+    cout << "Pilih: ";
+    cin >> pilihan;
+
+    if (pilihan == 1) {
+        editMahasiswa(data, index);
+    } 
+    else if (pilihan == 2) {
+        hapusMahasiswa(data, jumlahMahasiswa, index);
+    }
+    else {
+        cout << "Kembali ke menu utama.\n";
+    }
 }
 
 void selectionSortRataRataDescending(Mahasiswa data[], int jumlahMahasiswa) {
@@ -255,7 +329,7 @@ void menuSortingIPK(Mahasiswa data[], int jumlahMahasiswa) {
         return;
     }
 
-    // Hitung rata-rata dulu
+    // Hitung rata-rata
     for (int i = 0; i < jumlahMahasiswa; i++) {
         data[i].rataRata = hitungRataRata(data, i);
     }
@@ -273,15 +347,19 @@ int main() {
     int pilihanMenu;
     string inputMenu;
 
-    // ====== DATASET AWAL / PRELOADED ======
+    // Dataset Awal
     data[0] = {"Helga Arya Prayoga", "24051130022", 3, {3.8, 3.7, 3.9}, 0, ""};
-    data[1] = {"Asya Tiara Syafitrah Susilo", "24051130021", 3, {3.5, 3.7, 3.9}, 0, ""};
+    data[1] = {"Asya Tiara Syafitrah", "24051130021", 3, {3.5, 3.7, 3.9}, 0, ""};
     data[2] = {"Nadia Omara", "23051130017", 5, {3.2, 3.4, 3.5, 3.2, 3.7}, 0, ""};
     data[3] = {"Arif Syarifuddin", "23051104013", 5, {3.2, 3.5, 3.7, 3.5, 4.0}, 0, ""};
-    data[4] = {"Budi Halmahera", "23051130055", 3, {3.0, 3.4, 3.6}, 0, ""}; // 
+    data[4] = {"Budi Halmahera", "23051130055", 3, {3.0, 3.4, 3.6}, 0, ""};
+    data[5] = {"Siti Rahmawati", "23051130062", 4, {3.1, 3.3, 3.2, 3.5}, 0, ""};
+    data[6] = {"Agus Prasetyo", "22051120011", 6, {2.9, 3.0, 3.2, 3.3, 3.4, 3.5}, 0, ""};
+    data[7] = {"Dewi Lestari", "22051120012", 4, {3.6, 3.7, 3.8, 3.8}, 0, ""};
+    data[8] = {"Rama Fadillah", "24051130010", 2, {3.4, 3.6}, 0, ""};
+    data[9] = {"Melani Putri", "24051130009", 3, {3.3, 3.4, 3.8}, 0, ""};
 
-    jumlahMahasiswa = 5;
-    // ====== END DATASET ======
+    jumlahMahasiswa = 10;
 
     cout << "============================================\n";
     cout << "     Selamat Datang di SIATMA               \n";
