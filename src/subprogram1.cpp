@@ -231,42 +231,6 @@ void sequentialSearchNIM(Mahasiswa data[], int jumlahMahasiswa) {
     cout << "Semester Terendah : S" << semMin << " (" << minIPK << ")\n";
 }
 
-void selectionSortRataRataDescending(Mahasiswa data[], int jumlahMahasiswa) {
-    for (int i = 0; i < jumlahMahasiswa - 1; i++) {
-        int indexMax = i;
-
-        for (int j = i + 1; j < jumlahMahasiswa; j++) {
-            if (data[j].rataRata > data[indexMax].rataRata) {
-                indexMax = j;
-            }
-        }
-
-        if (indexMax != i) {
-            Mahasiswa temp = data[i];
-            data[i] = data[indexMax];
-            data[indexMax] = temp;
-        }
-    }
-}
-
-void menuSortingIPK(Mahasiswa data[], int jumlahMahasiswa) {
-    if (jumlahMahasiswa == 0) {
-        cout << "Belum ada data mahasiswa.\n";
-        return;
-    }
-
-    // Hitung rata-rata dulu
-    for (int i = 0; i < jumlahMahasiswa; i++) {
-        data[i].rataRata = hitungRataRata(data, i);
-    }
-
-    // Panggil selection sort descending
-    selectionSortRataRataDescending(data, jumlahMahasiswa);
-
-    cout << "\nData berhasil di-sorting berdasarkan Rata-rata IPK (Tertinggi ke Terendah).\n";
-    tampilkanSemuaData(data, jumlahMahasiswa);
-}
-
 int main() {
     Mahasiswa data[MAX_MAHASISWA];
     int jumlahMahasiswa = 0;
@@ -311,7 +275,7 @@ do {
             break;
 
         case 4:
-            menuSortingIPK(data, jumlahMahasiswa);
+            cout << "Menu 4 belum tersedia.\n";
             break;
 
         case 0:
