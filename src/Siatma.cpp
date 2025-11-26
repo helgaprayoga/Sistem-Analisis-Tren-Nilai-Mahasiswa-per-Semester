@@ -34,6 +34,19 @@ void inputMahasiswa(Mahasiswa data[], int &jumlahMahasiswa) {
         cout << "Masukkan NIM: ";
         cin >> data[jumlahMahasiswa].NIM;
 
+        bool duplikat = false;
+        for (int i = 0; i < jumlahMahasiswa; i++) {
+            if (data[i].NIM == data[jumlahMahasiswa].NIM) {
+                duplikat = true;
+                break;
+            }
+        }
+
+        if (duplikat) {
+            cout << "NIM sudah ada! Masukkan NIM lain.\n";
+            continue;  
+        }
+
         cout << "Masukkan jumlah semester (maks " << MAX_SEMESTER << "): ";
         cin >> data[jumlahMahasiswa].jumlahSemester;
 
@@ -218,7 +231,7 @@ void editMahasiswa(Mahasiswa data[], int index) {
 
     cout << "IPK semester " << pilihan << " berhasil diperbarui!\n";
 
-    // Update ulang nilai rata-rata & tren
+    // update ulang nilai rata-rata & tren
     data[index].rataRata = hitungRataRata(data, index);
     data[index].tren = hitungTren(data, index);
 
@@ -249,7 +262,7 @@ void sequentialSearchNIM(Mahasiswa data[], int &jumlahMahasiswa) {
 
     int index = -1;
 
-    // Sequential Search
+    // sequential search
     for (int i = 0; i < jumlahMahasiswa; i++) {
         if (data[i].NIM == nimDicari) {
             index = i;
@@ -262,7 +275,6 @@ void sequentialSearchNIM(Mahasiswa data[], int &jumlahMahasiswa) {
         return;
     }
 
-    // Hitung ulang info
     data[index].rataRata = hitungRataRata(data, index);
     data[index].tren = hitungTren(data, index);
 
@@ -329,12 +341,11 @@ void menuSortingIPK(Mahasiswa data[], int jumlahMahasiswa) {
         return;
     }
 
-    // Hitung rata-rata
     for (int i = 0; i < jumlahMahasiswa; i++) {
         data[i].rataRata = hitungRataRata(data, i);
     }
 
-    // Panggil selection sort descending
+    // panggil selection sort descending
     selectionSortRataRataDescending(data, jumlahMahasiswa);
 
     cout << "\nData berhasil di-sorting berdasarkan Rata-rata IPK (Tertinggi ke Terendah).\n";
